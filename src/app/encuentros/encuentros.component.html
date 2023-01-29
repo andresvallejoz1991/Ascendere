@@ -1,0 +1,55 @@
+<ascendere-navbar></ascendere-navbar>
+
+
+    <header class="container mx-auto px-4 py-8">
+        <h1 class="text-white text-5xl">Encuentros</h1>
+    </header>
+
+    <!-- sections -->
+    <ng-container *ngIf="activeType$ |async as activeType">
+        <section class="container mx-auto px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+                <ng-container *ngFor="let eType of eTypes">
+                    <ascendere-encuentro-type-card [active]="activeType === eType.key" [key]="eType.key"
+                        [title]="eType.title" [assetSource]="eType.assetSource">
+                    </ascendere-encuentro-type-card>
+                </ng-container>
+            </div>
+        </section>
+    </ng-container>
+
+    <!-- divider -->
+    <hr class="w-full container mx-auto border-white">
+    <section class="container mx-auto px-4 py-20">
+        <ng-container *ngIf="encuentros$|async as encuentros">
+            <div class="mb-10">
+                <ascendere-search-input></ascendere-search-input>
+            </div>
+
+            <!-- loading -->
+            <div *ngIf="encuentros.loading" class="text-center text-white text-lg">
+                Cargando...
+            </div>
+
+            <!-- error -->
+            <div *ngIf="encuentros.error" class="text-center text-white text-lg">
+                Ocurrió un problema al cargar los encuentros
+            </div>
+
+            <!-- data -->
+            <div *ngIf="encuentros.data?.length" class=" grid grid-cols-auto-fit gap-10 md:gap-16">
+                <ascendere-encuentro-card *ngFor="let encuentro of encuentros.data" [encuentro]="encuentro">
+                </ascendere-encuentro-card>
+            </div>
+
+            <!-- loaded and empty -->
+            <div *ngIf="!encuentros.data?.length && !encuentros.loading" class="text-center text-white text-lg">
+                No se encontraron encuentros próximos
+            </div>
+        </ng-container>
+        <div class="mt-10">
+            <ascendere-pagination-navigation></ascendere-pagination-navigation>
+        </div>
+    </section>
+
+<ascendere-footer></ascendere-footer>

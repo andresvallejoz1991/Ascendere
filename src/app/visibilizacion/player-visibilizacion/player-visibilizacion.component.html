@@ -1,0 +1,17 @@
+<article class="w-full h-auto max-w-3xl mx-auto px-4 py-8 flex-col gap-10 flex items-stretch">
+    <ascendere-close-circle></ascendere-close-circle>
+
+
+    <ng-container *ngIf="video$|async as video">
+        <h1 class="text-white text-3xl ">{{video.snippet.title}}</h1>
+
+        <iframe [src]="videoSource$|async" title="YouTube video player" frameborder="0" class="w-full aspect-video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+
+        <p class="text-white text-lg whitespace-pre-wrap">
+            {{video.snippet.description}}
+        </p>
+    </ng-container>
+
+</article>

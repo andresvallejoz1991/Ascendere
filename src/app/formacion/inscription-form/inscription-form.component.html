@@ -1,0 +1,78 @@
+<section *ngIf="curso$ |async as curso" class="w-full max-w-4xl mx-auto pb-20 pt-10 md:pt-20 px-4">
+
+    <!-- header -->
+    <div class="flex flex-col items-end justify-between mb-8">
+        <ascendere-close-circle></ascendere-close-circle>
+    </div>
+
+    <ng-container *ngIf="curso.data">
+        <div *ngIf="isInscribed$|async as inscribed" class="w-full bg-white p-8 rounded-md gap-4 flex flex-col">
+            <!-- loading inscribed -->
+            <p *ngIf="inscribed.loading">
+                Cargando...
+            </p>
+
+            <!-- error -->
+            <p *ngIf="inscribed.error">
+                Ocurrió un error
+            </p>
+
+            <!-- Inscription Form -->
+            <ng-container *ngIf="!inscribed.loading && !inscribed.data">
+                <p class="text-xl">
+                    Usted ha escogido un curso de formación del itinerario <b>{{curso.data.itinerary}}</b>. Recuerde que
+                    si usted está
+                    interesado/a en certificarse por 120 horas en este itinerario,
+                    debe aprobar al menos 3 cursos ofertados en el mismo entre los años 2022 y 2023.
+                </p>
+                <p class="text-lg">
+                    ¿Está interesado en tomar otros cursos de este mismo itinerario para obtener la certificación?
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-end gap-4">
+                    <ng-container *ngIf="inscribeCourseSub; else InscribeButtonsTemplate">
+                        <button class="bg-ascendere-yellow text-lg font-medium text-white px-4 py-2 rounded">
+                            <i class="bi bi-flower3"></i> Guardando Inscripción...
+                            </button>
+                            </ng-container>
+                            
+                            <!--  -->
+                            <ng-template #InscribeButtonsTemplate>
+                                <button (click)="inscribeCourse(false)"
+                                    class="bg-ascendere-yellow text-lg font-medium text-white px-4 py-2 rounded">
+                            Solo inscribirme en el curso
+                            </button>
+                        <button (click)="inscribeCourse(true)" class="bg-ascendere-yellow text-lg font-medium text-white px-4 py-2 rounded">
+                            Inscribirme en el curso y el itinerario
+                        </button>
+                    </ng-template>
+                </div>
+            </ng-container>
+
+            <!-- inscribed message -->
+            <ng-container *ngIf="!inscribed.loading && inscribed.data">
+                <ng-container *ngIf="currentUser$ |async as user">
+                    <p *ngIf="user.displayName" class="text-xl">
+                        Estimado/a {{user.displayName}}
+                    </p>
+                </ng-container>
+                <p class="text-xl">
+                    !Gracias por inscribirse al curso <b>{{curso.data.title}}</b>!
+                </p>
+                <p class="text-xl">
+                    Una vez que concluya el tiempo de postulaciones, en las 48 horas
+                    siguientes se le notificar la aceptación o no de su inscripción, en caso de
+                    que no le llegue el correo de confirmación o desee realizar alguna consulta por favor
+                    escríbanos a <i>formaciondocente@utpl.edu.ec</i>
+                </p>
+                <p class="text-lg">
+                    Dirección de Innovación Formación y Evaluación Docente
+                </p>
+                <p class="text-lg">
+                    Vicerrectorado Académico
+                </p>
+                </ng-container>
+        </div>
+    </ng-container>
+
+</section>

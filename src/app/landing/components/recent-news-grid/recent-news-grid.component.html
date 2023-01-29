@@ -1,0 +1,49 @@
+<!-- news section -->
+<section id="noticias" class="mx-auto w-full max-w-6xl px-4 mt-20">
+    <!-- section title -->
+    
+    <div class="flex">
+        <div class="flex w-full">
+            <h2 class="text-ascendere-blue text-xl md:text-3xl font-medium mb-10">
+                Noticias Recientes
+            </h2>
+        </div>
+        <div class="flex  w-full justify-end">
+            <a class="self-start text-lg px-6 py-2 rounded-full text-white bg-ascendere-yellow transform duration-300 hover:scale-105"
+                routerLink="/noticias">
+                Ver más noticias <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        
+    </div>
+    <ng-container *ngIf="news$|async as news">
+        <!-- case when no new could be loaded -->
+        <p *ngIf="news.error" class=" text-center">
+            Ocurrió un error al cargar las noticias...
+        </p>
+
+        <!-- show recent news -->
+        <div *ngIf="news.data" class="grid grid-cols-1 md:grid-cols-3 gap-8 grid-flow-row auto-rows-fr auto-cols-fr">
+            <a *ngFor="let recentNews of news.data" [routerLink]="recentNews ?[ '/noticias', recentNews.id] : null">
+                <article
+                    class="relative w-full h-full z-10 hover:scale-105 transform transition rounded-lg overflow-hidden bg-black bg-opacity-40"
+                    [ngClass]="{'animate-pulse': news.loading}" [title]="recentNews?.title">
+
+                    <!-- bg -->
+                    <img *ngIf="recentNews" [src]="recentNews.img" [alt]="recentNews.title"
+                        class="absolute z-10 inset-0 w-full h-full object-cover">
+
+                    <!-- overlay -->
+                    <div class="overlay absolute inset-0 z-20 w-full h-full via-transparent to-transparent">
+                    </div>
+
+                    <div class="absolute left-0 right-0 bottom-0  z-30 p-4">
+                        <h3 *ngIf="recentNews" class=" text-white text-xl md:text-2xl line-clamp-2">
+                            {{recentNews.title}}
+                        </h3>
+                    </div>
+                </article>
+            </a>
+        </div>
+    </ng-container>
+</section>

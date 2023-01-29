@@ -1,0 +1,21 @@
+<button (click)="openModal()" class="flex items-center gap-2">
+    <ng-container *ngIf="currentUser$|async as user; else loginTemplate">
+        <ng-container *ngIf="user.photoURL as url;else noPictureTemplate">
+            <img class=" w-6 md:w-8 bg-cover rounded-full aspect-square overflow-hidden bg-white" [src]="url"
+            [alt]="user.displayName">
+        </ng-container>
+        <ng-template #noPictureTemplate>
+            <i class="text-white text-2xl sm:text-3xl bi bi-person-circle"></i>
+        </ng-template>
+        <span class="text-white hidden md:block">
+            {{user.displayName|titlecase}}
+        </span>
+    </ng-container>
+    <!-- empty bagge -->
+    <ng-template #loginTemplate>
+        <i class="text-white text-2xl sm:text-3xl bi bi-person-circle"></i>
+        <span class="text-white hidden md:block">
+            Iniciar Sesión
+        </span>
+    </ng-template>
+</button>

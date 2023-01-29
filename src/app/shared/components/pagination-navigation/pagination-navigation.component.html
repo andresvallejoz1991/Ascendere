@@ -1,0 +1,11 @@
+<div class="w-min flex flex-row gap-1">
+    <button class="bg-whiteDarker px-4 py-2 rounded-l-md" (click)="prevPage()">
+        Anterior
+    </button>
+    <span *ngIf="paginator$ |async  as paginator " class="bg-whiteDarker px-4 py-2 whitespace-nowrap ">
+        {{(paginator.offset /6)+ 1| number : '1.0-0'}} / {{paginator.total/6| number : '1.0-0'}}
+    </span>
+    <button class="bg-whiteDarker px-4 py-2 rounded-r-md" (click)="nextPage()">
+        Siguiente
+    </button>
+</div>

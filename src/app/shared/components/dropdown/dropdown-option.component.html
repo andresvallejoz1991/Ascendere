@@ -1,0 +1,9 @@
+<button (click)="setKey()" [ngClass]="{'text-ascendere-blue': isActive|async}"
+    class="block w-full px-4 py-2 text-lg text-left hover:bg-whiteDarker">
+    <ng-container *ngIf="label;else noLabelTemplate">
+        {{label}}
+    </ng-container>
+    <ng-template #noLabelTemplate>
+        Limpiar Selección
+    </ng-template>
+</button>

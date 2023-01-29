@@ -1,0 +1,21 @@
+<main [ngClass]="{'animated-bg':isNotHome}" class="relative w-full overflow-hidden">
+
+    <ascendere-sidebar></ascendere-sidebar>
+
+    <ascendere-login></ascendere-login>
+
+    <!-- main content -->
+    <div class="w-full relative z-10 overflow-y-auto overflow-x-hidden">
+        <router-outlet> </router-outlet>
+    </div>
+
+    <!-- background -->
+    <div class="wrap z-0 absolute w-full h-full inset-0">
+        <svg *ngFor="let item of [0,0,0,0,0,0,0,0,0,0,0,0,0]" class="svg fill-ascendere-yellow"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M11.434 110.835C5.8167 110.835 1.2207 106.239 1.2207 100.621V11.8721C1.2207 6.25606 5.8167 1.66006 11.434 1.66006C17.0514 1.66006 21.6474 6.25606 21.6474 11.8721V100.621C21.6474 106.239 17.0514 110.835 11.434 110.835Z" />
+
+        </svg>
+    </div>
+</main>

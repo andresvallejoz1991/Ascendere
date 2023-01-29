@@ -1,0 +1,74 @@
+<ascendere-navbar></ascendere-navbar>
+<ascendere-page-title>
+    Recursos Disponibles
+</ascendere-page-title>
+
+<main class="mt-10 sm:mt-20 mx-auto px-4 w-full max-w-4xl">
+    <div class="flex flex-col items-start">
+        <ascendere-genially class="mb-8 md:mb-12 self-stretch" src="https://view.genial.ly/5e62643da399cc626915be4a">
+        </ascendere-genially>
+
+        <h4 class="font-medium text-white text-lg md:text-2xl mb-2">
+            Herramientas para el uso docente
+        </h4>
+        <p class="text-white md:text-lg">
+            Las herramientas tecnológicas le ayudará a encontrar nuevas e innovadoras maneras de apoyo en el proceso de
+            enseñanza aprendizaje para los estudiantes. Por ello, el laboratorio de innovación docente dispone de
+            herramientas tecnológicas para ayudar en esta tarea.
+            <br>
+            Si deseas ver nuestros webinars sobre estas herramientas visita nuestro repositorio de <a
+                class="font-medium text-ascendere-yellow" routerLink="/webinars">videos</a>
+        </p>
+    </div>
+    </main>
+
+<section id="recursos" *ngIf="recursos$ |async as recursos"
+    class="w-full container mx-auto px-4 mt-10 md:mt-16 lg:mt-20 ">
+    <div class="flex items-center" *ngIf="recursos.loading">
+        <ascendere-loading></ascendere-loading>
+    </div>
+
+    <div class="flex items-center" *ngIf="recursos.error">
+        Ocurrió un problema al cargar los recursos
+    </div>
+
+    <ng-container *ngIf="recursos.data">
+        <div class="grid grid-cols-auto-fit gap-8 md:gap-12">
+            <article *ngFor="let recurso of recursos.data"
+                class="w-full bg-white rounded-lg md:rounded-2xl shadow-md px-4 pt-4 pb-8 transform hover:scale-105 transition-transform">
+
+                <img [src]="recurso.logo" [alt]="recurso.name"
+                    class="w-full p-4 md:p-8 object-contain aspect-video md:aspect-square">
+
+                <!-- title -->
+                <h3 class="text-lg md:text-xl mt-4">
+                    {{recurso.name}}
+                </h3>
+
+                <!-- description -->
+                <p class="mt-2 line-clamp-4">
+                    {{recurso.description}}
+                </p>
+
+                <!-- actions -->
+                <div class="flex flex-wrap gap-2 mt-4 justify-center">
+                    <span *ngFor="let type of recurso.type"
+                        class="bg-ascendere-yellow uppercase text-xs px-2 py-1 rounded font-medium ">
+                        {{type.name}}
+                    </span>
+
+                    <a [href]="url" target="_blank" rel="noopener noreferrer" *ngFor="let url of recurso.videos ?? []"
+                        class="bg-ascendere-yellow uppercase text-xs px-2 py-1 rounded font-medium animate-bounce">
+                        <i class="mr-1 bi bi-play-btn"></i> Video
+                    </a>
+                </div>
+            </article>
+        </div>
+    </ng-container>
+</section>
+
+<section class="mt-10 md:mt-16 lg:mt-20 mx-auto px-4 w-full max-w-4xl mb-20">
+    <ascendere-genially class="self-stretch" src="https://view.genial.ly/5e7cd2b339cc270e3c207fb7"></ascendere-genially>
+</section>
+
+<ascendere-footer></ascendere-footer>

@@ -1,0 +1,45 @@
+<section *ngIf="cursos$ | async as cursos" >
+
+    <!-- content -->
+    <div *ngIf="cursos.data?.length != 0" class="mt-20 w-full max-w-7xl mx-auto px-4 flex flex-row gap-4 items-stretch">
+        <div class="w-full flex flex-col" >
+            <!-- section title -->
+            <h2 class="text-ascendere-blue text-xl md:text-3xl font-medium mb-10">
+                Formación Docente
+            </h2>
+
+            <!-- loading state -->
+            <p *ngIf="cursos.loading" class="mx-auto  text-center text-xl my-20">
+                Cargando cursos...
+            </p>
+
+            <div *ngIf="cursos.data?.length ?? 0 > 0" class="grid grid-cols-auto-fit gap-4 md:gap-8 mb-8">
+                <div *ngFor="let curso of cursos.data">
+                    <a class="block bg-ascendere-blueDarker bg-gradient-to-br from-ascendere-blueLighter to-ascendere-blueDarker px-8 py-8 shadow-sm rounded transform duration-300 hover:scale-105 "
+                        [routerLink]="['/formacion', 'curso', curso.id]">
+
+
+                        <h3 class="text-white text-lg md:text-2xl font-medium mb-4 line-clamp-2">
+                            {{curso.title}}
+                        </h3>
+
+                        <p class="text-white md:text-lg mb-8 line-clamp-4">
+                            <span [innerHtml]="curso.description"></span>
+                        </p>
+
+                        <b class="text-white">
+                            <span *ngIf="curso.date_start as ds">{{ds.toDate()|date}}</span> al
+                            <span *ngIf="curso.date_end as ds">{{ds.toDate() |date}}</span>
+                            </b>
+                    </a>
+
+                </div>
+                </div>
+                
+                <a class="self-start text-lg px-4 py-2 rounded-full text-white bg-ascendere-yellow transform duration-300 hover:scale-105"
+                    routerLink="/formacion">
+                    Ver cursos anteriores <i class="bi bi-arrow-right"></i>
+                </a>
+        </div>
+    </div>
+</section>

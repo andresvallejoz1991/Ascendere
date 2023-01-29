@@ -1,0 +1,17 @@
+<div class="relative w-full  ">
+    <button (click)="toggle()"
+        class="relative z-10 w-full flex justify-between gap-2 items-center rounded-md bg-whiteDarker px-4 py-2 shadow-sm ">
+        <span class="w-full truncate text-lg text-left">{{label|async}}</span>
+        <i class="bi bi-menu-down text-ascendere-blueDarker"></i>
+    </button>
+
+    <button *ngIf="isOpen" class="fixed inset-0 z-30" (click)="close()" tabindex="-1"></button>
+
+    <div *ngIf="isOpen"
+        class="max-h-80 overflow-auto z-40 origin-top-left absolute left-0 mt-2 w-full rounded-md shadow-lg bg-white"
+        [tabindex]="isOpen ? 0:-1">
+        <div class="py-1">
+            <ng-content select="ascendere-dropdown-option"></ng-content>
+        </div>
+    </div>
+</div>

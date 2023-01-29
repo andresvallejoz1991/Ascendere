@@ -1,0 +1,38 @@
+<!-- close background -->
+<button (click)=" closeModal()" *ngIf="isOpen" class="fixed inset-0 w-full h-full z-30 bg-black bg-opacity-20"
+    tabindex="-1"></button>
+
+<div class="fixed z-30 top-0 sm:top-32 bottom-0 sm:bottom-24 left-1/2 w-full max-w-xl h-auto overflow-auto 
+            bg-white sm:rounded-xl shadow-sm
+            px-6 py-4
+            transform -translate-x-1/2 translate-y-0 transition-transform"
+    [ngClass]="{'-translate-y-[100vh]': !isOpen}" [tabindex]="isOpen?0:-1">
+    <div class="relative w-full h-full flex flex-col justify-center gap-4 items-center">
+        <!-- close button -->
+        <button (click)="closeModal()"
+            class=" absolute right-0 top-0 self-end flex gap-2 bg-ascendere-yellowDarker py-2 px-4 rounded-full">
+            Cerrar
+            <i class="bi bi-x-circle"></i>
+        </button>
+
+        <img class="w-full max-w-xs mb-10" src="/assets/images/ascendere.svg" alt="Proyecto Ascendere">
+
+        <ng-container *ngIf="currentUser$|async as user; else loginTemplate">
+            <button ascendere-login-with-button (click)="logout()">
+                <i class="icon bi bi-box-arrow-left"></i>
+                Cerrar Sesión
+            </button>
+            </ng-container>
+            <ng-template #loginTemplate>
+            <button ascendere-login-with-button (click)="loginGoogle()" class="w-full max-w-sm">
+                <i class="icon bi bi-google"></i> <span>Ingresa con Google</span>
+            </button>
+            <button ascendere-login-with-button (click)="loginMicrosoft()" class="w-full max-w-sm">
+                <i class="icon bi bi-microsoft"></i> <span>Ingresa con Microsoft</span>
+            </button>
+            <button ascendere-login-with-button (click)="loginUtpl()" class="w-full max-w-sm">
+                <span class="icon font-bold">UTPL</span> <span>Ingresa con UTPL</span>
+            </button>
+            </ng-template>
+    </div>
+</div>

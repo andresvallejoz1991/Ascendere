@@ -1,0 +1,22 @@
+<a routerLink="/innovacion-docente" [queryParams]="{key}" [title]="title" 
+    class="block relative w-full h-auto" [ngClass]="{'scale-110':active$|async}">
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front rounded-xl">
+                <article class="w-full h-full content-center inline-block relative">
+                    <img [src]="assetSource" [alt]="title" class="rounded-xl w-full aspect-square bg-white">
+                </article>
+            </div>
+            <div class="flip-card-back rounded-xl">
+                <div class="absolute inset-0 w-auto p-4 bg-purple-700 ">
+                    <p class="text-base text-justify">
+                    {{ description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="text-white text-2xl truncate mt-4 text-center">
+        {{title}}
+    </h3>
+</a>

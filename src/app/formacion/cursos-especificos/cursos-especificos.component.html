@@ -1,0 +1,34 @@
+<ascendere-navbar></ascendere-navbar>
+
+<ascendere-page-title>
+    Formación Docente
+</ascendere-page-title>
+
+<ng-container *ngIf="articulo$|async as articulo">
+
+    <ng-container *ngIf="articulo.loading">
+        <p class="mx-auto text-center text-white px-4 py-32">
+            Cargando...
+        </p>
+    </ng-container>
+
+    <ng-container *ngIf="articulo.error">
+        Ocurrió un error al cargar la información
+    </ng-container>
+
+    <ng-container *ngIf="articulo.data">
+
+        <main class="max-w-6xl w-full mx-auto px-4 mb-16">
+            <div class="px-6 sm:px-12 lg:px-20 py-8 bg-ascendere-blue rounded-lg">
+                <h1 class="text-white text-2xl text-center mb-4">
+                    {{articulo.data.title}}
+                </h1>
+                <div class="text-white text-xl list-disc html-content" [innerHtml]="articulo.data.content">
+                </div>
+            </div>
+        </main>
+
+    </ng-container>
+</ng-container>
+
+<ascendere-footer></ascendere-footer>

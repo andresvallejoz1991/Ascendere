@@ -1,0 +1,11 @@
+<a [routerLink]="['/encuentros', encuentro.type, encuentro.id]">
+    <article class="w-full bg-ascendere-blue rounded-lg shadow-lg overflow-hidden">
+        <img class="w-full aspect-square" [src]="encuentro.banner" [alt]="encuentro.title">
+        <div class="p-4">
+            <h1 class="text-white text-2xl truncate mb-4" [title]="encuentro.title">
+                {{encuentro.title}}
+            </h1>
+            <div class="line-clamp-4 text-white" [innerHtml]="encuentro.description"></div>
+        </div>
+    </article>
+</a>

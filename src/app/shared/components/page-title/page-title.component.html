@@ -1,0 +1,12 @@
+<header class="max-w-6xl w-full mx-auto px-4 mb-14 md:mb-20">
+    <div class="flex flex-nowrap gap-2 w-min text-white bg-ascendere-yellow py-6 px-6 rounded-b-md shadow">
+    
+        <button *ngIf="showBackButton" (click)="back()">
+            <i class="bi bi-arrow-left text-lg md:text-xl"></i>
+        </button>
+        <h2
+        class="whitespace-nowrap text-xl md:text-2xl  ">
+        <ng-content></ng-content>
+    </h2>
+</div>
+</header>

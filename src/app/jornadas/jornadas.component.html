@@ -1,0 +1,52 @@
+<ascendere-navbar></ascendere-navbar>
+
+<main class="container mx-auto mt-20 mb-20 px-4" *ngIf="jornada$|async as jornada">
+
+    <p *ngIf="jornada.loading">
+        <ascendere-loading></ascendere-loading>
+    </p>
+
+    <p *ngIf="jornada.error as err">
+        Ocurrió un error al cargar las jornada
+    </p>
+
+    <div *ngIf="jornada.data ">
+
+        <h1 class="text-3xl font-medium text-white text-center">
+            {{jornada.data.title}}
+        </h1>
+        <h3 class="text-lg  text-white text-center">
+            {{jornada.data.date |date:"fullDate"}}
+        </h3>
+
+        <div class="mt-8 md:mt-16 flex flex-col sm:flex-row gap-8">
+            <div class="sm:w-1/4 flex flex-col gap-4">
+                <ascendere-dropdown-select key="jornada" label="Jornadas Académicas">
+                    <ascendere-dropdown-option key="jornada">
+                    </ascendere-dropdown-option>
+                    <ascendere-dropdown-option *ngFor="let l of jornadasSelect$|async" [label]="l" key="jornada">
+                    </ascendere-dropdown-option>
+                </ascendere-dropdown-select>
+
+                <ng-container *ngFor="let res of jornada.data.resources">
+                    <a *ngIf="res.link && res.name" [href]="res.link" target="_blank" rel="noopener noreferrer"
+                        class="text-white w-full flex justify-between gap-2 items-center rounded-md bg-ascendere-yellow px-4 py-2 shadow-sm">
+                        {{res.name}}
+                    </a>
+                </ng-container>
+            </div>
+
+            <div class="sm:w-3/4 flex flex-col gap-6 items-stretch">
+                <button (click)="goToTwitter()" class="text-white text-center text-2xl self-center">
+                    <span class="text-ascendere-yellow">#</span>UTPLFuturo
+                </button>
+
+                <p class="text-white md:text-xl html-content" [innerHTML]="jornada.data.content"> </p>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<ascendere-footer></ascendere-footer>

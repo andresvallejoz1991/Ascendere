@@ -1,0 +1,55 @@
+<ascendere-navbar></ascendere-navbar>
+
+<main class="container mt-20 mx-auto px-4">
+    <!-- section title -->
+    <h2 class="text-ascendere-blue text-xl md:text-3xl font-medium">
+        Noticias
+    </h2>
+</main>
+
+<section class="container mx-auto px-4 mt-10 mb-20">
+    <div class="mb-10">
+        <ascendere-search-input></ascendere-search-input>
+    </div>
+    <ng-container *ngIf="news$ |async as news">
+
+        <p *ngIf="news.loading">
+            <ascendere-loading></ascendere-loading>
+        </p>
+
+        <p *ngIf="news.error">
+            Ocurrió un error al cargar las Noticias
+        </p>
+
+        <div *ngIf="news.data" class="grid gap-8 md:gap-12 grid-cols-auto-fit auto-rows-fr grid-flow-row-dense">
+
+            <a *ngFor="let recentNews of news.data" [routerLink]="recentNews ?[ '/noticias', recentNews.id] : null"
+                class="block z-10 hover:scale-105 transform transition card shadow">
+                <article class="relative w-full h-full rounded-lg overflow-hidden bg-black bg-opacity-40"
+                    [ngClass]="{'animate-pulse': news.loading}" [title]="recentNews?.title">
+
+                    <!-- bg -->
+                    <img *ngIf="recentNews" [src]="recentNews.img" [alt]="recentNews.title"
+                        class="absolute z-10 inset-0 w-full h-full object-cover">
+
+                    <!-- overlay -->
+                    <div
+                        class="overlay absolute inset-0 z-20 w-full h-full bg-gradient-to-t via-transparent to-transparent">
+                    </div>
+
+                    <div class="absolute left-0 right-0 bottom-0  z-30 p-4">
+                        <h3 *ngIf="recentNews" class=" text-white text-xl md:text-2xl line-clamp-2">
+                            {{recentNews.title}}
+                        </h3>
+                    </div>
+                </article>
+            </a>
+
+        </div>
+        <div class="mt-10">
+            <ascendere-pagination-navigation></ascendere-pagination-navigation>
+        </div>
+    </ng-container>
+</section>
+
+<ascendere-footer></ascendere-footer>

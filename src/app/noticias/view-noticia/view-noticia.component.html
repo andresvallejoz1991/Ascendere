@@ -1,0 +1,80 @@
+<ascendere-navbar></ascendere-navbar>
+
+<ascendere-page-title [showBackButton]="true"> Noticias </ascendere-page-title>
+
+<ng-container *ngIf="news$ | async as articulo">
+  <ng-container *ngIf="articulo.loading">
+    <p class="mx-auto text-center text-white px-4 py-32">Cargando...</p>
+  </ng-container>
+  <ng-container *ngIf="articulo.error">
+    Ocurrió un error al cargar la información
+  </ng-container>
+
+  <ng-container *ngIf="articulo.data">
+    <section class="max-w-6xl w-full mx-auto px-4 mb-16">
+      <div class="flex flex-col-reverse sm:flex-row items-stretch gap-4 mb-4">
+        <!-- likes and dislikes -->
+        <div class="flex flex-row w-full gap-4">
+          <!-- like button -->
+          <button class="text-white" (click)="like()">
+            <ng-container *ngIf="hasLiked$ | async; else notLiked">
+              <i class="bi bi-hand-thumbs-up-fill"></i>
+            </ng-container>
+            <ng-template #notLiked>
+              <i class="bi bi-hand-thumbs-up"></i>
+            </ng-template>
+            {{
+              (articulo.data.like ?? 0) + (articulo.data.likesList?.length ?? 0)
+            }}
+          </button>
+
+          <!-- dislike button -->
+          <button class="text-white" (click)="dislike()">
+            <ng-container *ngIf="hasDisliked$ | async; else notDisliked">
+              <i class="bi bi-hand-thumbs-down-fill"></i>
+            </ng-container>
+            <ng-template #notDisliked>
+              <i class="bi bi-hand-thumbs-down"></i>
+            </ng-template>
+           <!--  {{
+              (articulo.data.dislike ?? 0) +
+                (articulo.data.dislikesList?.length ?? 0)
+            }} -->
+          </button>
+        </div>
+        <!-- divider -->
+        <p class="whitespace-nowrap text-xl text-white">
+          {{ articulo.data.relatedContent | titlecase }} -
+          {{ articulo.data.created.toDate() | date }}
+        </p>
+      </div>
+
+      <div style="display: flex; justify-content: center">
+        <div class="w-full content-center inline-block relative">
+          <img
+            [src]="articulo.data.img"
+            [alt]="articulo.data.title"
+            class="object-contain content-center w-full mb-8 rounded-md overflow-hidden shadow-md brightness-75"
+          />
+
+          <main
+            class="content-center absolute bottom-0 max-w-6xl w-full mx-auto px-4 mb-16 bg-purple-700 p-2"
+          >
+            <h1 class="text-white text-2xl text-center">
+              {{ articulo.data.title }}
+            </h1>
+          </main>
+        </div>
+      </div>
+      <!-- content -->
+      <div class="px-6 sm:px-12 lg:px-20 py-8 bg-white rounded-lg">
+        <div
+          class="text-xl list-disc html-content"
+          [innerHTML]="sanitizer.bypassSecurityTrustHtml(articulo.data.html)"
+        ></div>
+      </div>
+    </section>
+  </ng-container>
+</ng-container>
+
+<ascendere-footer></ascendere-footer>

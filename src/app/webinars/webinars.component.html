@@ -1,0 +1,53 @@
+<!-- when a video is playing place it over everything -->
+<div [hidden]="!playerOutlet.isActivated" class="fixed h-screen w-screen bg-black bg-opacity-80 z-50 overflow-auto">
+    <router-outlet #playerOutlet="outlet"></router-outlet>
+</div>
+
+<!-- navbar -->
+<ascendere-navbar></ascendere-navbar>
+
+<!-- content -->
+<header class="w-full container px-4 mx-auto py-20">
+    <h1 class="text-white text-4xl text-center">
+        Webinars
+    </h1>
+</header>
+
+<section class="w-full container px-4 mx-auto pb-20">
+
+    <!-- dropdown button -->
+    <div class="relative  w-full max-w-lg z-20 mb-8">
+        <button *ngIf="activeSeason$|async as activeSeason" (click)="openDropdown()"
+            class=" bg-ascendere-yellow text-white font-medium rounded-lg px-8 py-4 w-full flex justify-between items-center">
+            {{activeSeason.name}}
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+    
+        <!-- Dropdown menu -->
+        <div class="mt-4 absolute left-0 right-0 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-xl"
+            [ngClass]="{'':isDropdownOpen, 'hidden': !isDropdownOpen}">
+            <ng-container *ngFor="let season of availableSeasons$|async">
+                <a (click)="isDropdownOpen = false" routerLink="/webinars" [queryParams]="{webinarSeason:season.id}"
+                    class="block py-2 px-4 text-black border-none">
+                    {{season.name}}
+                </a>
+            </ng-container>
+        </div>
+    </div>
+    
+    <!-- section title
+                                                <h3 class=" mb-8 text-white text-3xl" *ngIf="activeSeason$|async as activeSeason">
+                                                    {{activeSeason.name}}
+                                                </h3> -->
+
+    <!-- cards grid -->
+    <div class="grid grid-cols-auto-fit gap-8 md:gap-12 lg:gap-16">
+        <!-- video card -->
+        <ascendere-webinar-card *ngFor="let video of videos$|async" [video]="video"></ascendere-webinar-card>
+    </div>
+    </section>
+
+<ascendere-footer></ascendere-footer>

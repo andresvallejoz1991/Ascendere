@@ -1,0 +1,11 @@
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { YoutubeService } from './youtube.service';
+
+@NgModule({
+  imports: [HttpClientModule],
+  providers: [
+    YoutubeService,
+  ],
+})
+export class YoutubeModule { }

@@ -1,0 +1,68 @@
+<ascendere-navbar></ascendere-navbar>
+<!-- header -->
+<main class="container mx-auto px-4 flex flex-col-reverse md:flex-row items-stretch gap-8 mb-8">
+    <!-- left side with description -->
+    <div class="md:w-2/5 pt-20">
+        <!-- title -->
+        <h1 class="text-white font-medium text-3xl  mb-10 md:mb-12">
+            Ascendere al Aire
+        </h1>
+
+        <!-- page description -->
+        <p class="text-white text-xl font-light  mb-8 md:mb-16">
+            Este espacio ha sido creado para reflejar las buenas prácticas docentes y motivar a través de las
+            experiencias innovadoras a toda la comunidad educativa UTPL
+        </p>
+
+        <!-- dropdown button -->
+        <ng-container *ngIf="activeSeason$|async as activeSeason">
+            <button (click)="openDropdown()"
+                class="bg-ascendere-yellow text-white font-medium rounded-lg px-8 py-4 w-full flex justify-between items-center">
+                {{activeSeason.name}}
+                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+        </ng-container>
+
+        <!-- Dropdown menu -->
+        <div class="relative w-full z-50">
+            <div class=" absolute left-0 right-0 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+                [ngClass]="{'':isDropdownOpen, 'hidden': !isDropdownOpen}">
+                <ng-container *ngFor="let season of availableSeasons$|async">
+                    <a (click)="isDropdownOpen = false" routerLink="/podcasts" [queryParams]="{season:season.key}"
+                        class="block py-2 px-4 text-black border-none">
+                        {{season.name}}
+                    </a>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-1/2 hidden md:block">
+        <img src="assets/illustrations/player.svg" class="w-full xl:w-3/5 ml-auto">
+    </div>
+</main>
+
+<ng-container *ngIf="podcasts$|async as podcasts">
+    <!-- loading state -->
+    <p *ngIf="podcasts.loading" class="mx-auto text-white text-center text-xl my-20">
+        Cargando Podcasts...
+    </p>
+
+    <!-- show items -->
+    <section *ngIf="podcasts.data" class="container mx-auto px-4 my-20">
+        <div class="grid grid-cols-auto-fit gap-16 lg:gap24 xl:gap-32 ">
+            <ascendere-podcast-card *ngFor="let podcast of podcasts.data;trackBy:identify" [podcast]="podcast"
+                class="w-full">
+            </ascendere-podcast-card>
+        </div>
+    </section>
+    <!-- error -->
+    <section *ngIf="podcasts.error" class="container mx-auto text-white">
+        Ocurrió un error al cargar los podcasts.
+    </section>
+</ng-container>
+
+<ascendere-footer></ascendere-footer>

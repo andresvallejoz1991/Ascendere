@@ -1,0 +1,127 @@
+<ascendere-navbar></ascendere-navbar>
+<header class="mt-10 max-w-4xl w-full mx-auto px-4 flex items-center gap-8 flex-col">
+    <ascendere-circle-icon src="/assets/images/programa-formacion-docente.svg" alt="Programa de Formación Docente">
+    </ascendere-circle-icon>
+
+    <p class="text-white text-lg text-center">
+        El Programa de Formación agrupa un conjunto de módulos que se dictan por medio de cursos, seminarios o talleres
+        formativos, con el objetivo de potenciar la formación del profesorado de la universidad a través del uso de
+        metodologías y herramientas adecuadas que garanticen la adquisición de las competencias necesarias para el
+        desarrollo de la docencia e investigación de calidad.
+    </p>
+</header>
+
+<main class="w-full max-w-6xl mx-auto px-4 mb-20 items-stretch mt-16 gap-8">
+    <!-- main content -->
+    <div class="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+        <a href="assets/documents/instructivo-validacion-formacion.pdf" target="_blank" rel="noopener noreferrer"
+            class="truncate text-center px-4 py-2 uppercase bg-ascendere-yellow rounded-lg shadow-sm text-white text-sm lg:text-base font-medium">
+            Valida tu formación
+        </a>
+        <a routerLink="cursos-especificos"
+            class="truncate text-center px-4 py-2 uppercase bg-ascendere-yellow rounded-lg shadow-sm text-white text-sm lg:text-base font-medium">
+            Solicitar curso especifico
+        </a>
+        <a href="https://cdn.flipsnack.com/widget/v2/widget.html?hash=713y39pvxn" target="_blank"
+            rel="noopener noreferrer"
+            class="truncate text-center px-4 py-2 uppercase bg-ascendere-yellow rounded-lg shadow-sm text-white text-sm lg:text-base font-medium">
+            Programa de formación Docente
+        </a>
+        <a href="https://view.genial.ly/61f4794e6ed69b001195b5e1/dossier-necesidades-formativas-2022" target="_blank"
+            rel="noopener noreferrer"
+            class="truncate text-center px-4 py-2 uppercase bg-ascendere-yellow rounded-lg shadow-sm text-white text-sm lg:text-base font-medium">
+            Detección de Necesidades Formación
+        </a>
+        <div>
+            <ascendere-search-input></ascendere-search-input>
+        </div>
+        <div>
+            <ascendere-dropdown-select key="itinerary" label="Itinerario">
+                <ascendere-dropdown-option key="itinerary">
+                </ascendere-dropdown-option>
+                <ascendere-dropdown-option *ngFor="let l of itineraries$|async" [label]="l" key="itinerary">
+                </ascendere-dropdown-option>
+            </ascendere-dropdown-select>
+        </div>
+        <!-- <div> -->
+    </div>
+
+</main>
+
+<section class="max-w-7xl w-full mx-auto px-4 mb-20">
+    <ng-container *ngIf="cursos$|async as cursos">
+        <!-- loading data  -->
+        <ng-container *ngIf="cursos.loading">
+            <h3 class="text-center text-white p-8">Cargando cursos...</h3>
+        </ng-container>
+
+        <ng-container *ngIf="cursos.error">
+            <h3 class="text-center text-white p-8">Ocurrió un error al cargar los datos.</h3>
+        </ng-container>
+
+        <ng-container *ngIf="cursos.data">
+            <div class="w-full flex flex-col gap-8">
+                <div class="hidden sm:grid sm:grid-cols-4 md:grid-cols-5">
+                    <span class="font-medium text-white lg:text-xl">Tema</span>
+                    <span class="font-medium text-white lg:text-xl">Duración</span>
+                    <span class="font-medium text-white lg:text-xl hidden sm:block">Itinerario</span>
+                    <span class="font-medium text-white lg:text-xl hidden md:block">Fecha</span>
+                    <span class="font-medium text-white lg:text-xl">Estado</span>
+                </div>
+                <a [routerLink]="['curso',curso.id]"
+                    class="group grid grid-cols-1 sm:grid-cols-4 md:grid-cols-5 relative bg-ascendere-blue rounded-xl overflow-hidden"
+                    *ngFor="let curso of cursos.data">
+                    <div class="p-4" [title]="curso.title">
+                        <h3 class="text-white font-medium lg:text-lg line-clamp-3 group-hover:underline">
+                            {{curso.title}}
+                        </h3>
+                    </div>
+                    <div class="text-white p-4 sm:border-l-2 ">
+                        <div [innerHTML]="curso.duration" class="line-clamp-3"></div>
+                    </div>
+                    <div class="text-white p-4 sm:border-l-2 hidden sm:block">
+                        {{curso.itinerary}}
+                    </div>
+                    <div class="text-white p-4 sm:border-l-2 hidden md:block">
+                        <b *ngIf="curso.date_start as ds">{{ds.toDate()|date}}</b> al
+                        <b *ngIf="curso.date_end as ds">{{ds.toDate() |date}}</b>
+                    </div>
+
+                    <div class="text-ascendere-blueDarker p-4 bg-white font-medium">
+
+                        <ng-container
+                            *ngIf="ongoing(curso.date_start?.toDate(), curso.date_end?.toDate());else NotInCourseTemplate">
+                            <i class="bi bi-caret-right-fill"></i>
+                            En Curso
+                        </ng-container>
+
+                        <ng-template #NotInCourseTemplate>
+                            <ng-container
+                                *ngIf="canInscribe(curso.date_postulation?.toDate()); else  viewCourseTemplate">
+                                <i class="bi bi-calendar-event-fill"></i>
+                                Inscribete
+                                <br>
+                                <small>
+                                    hasta {{curso.date_postulation?.toDate() | date:"d MMMM , y"}}
+                                </small>
+                            </ng-container>
+                            <ng-template #viewCourseTemplate>
+                                <i class="bi bi-caret-right-fill"></i>
+                                Finalizado
+                            </ng-template>
+                        </ng-template>
+                    </div>
+                </a>
+            </div>
+
+            <!-- pagination -->
+            <div class="mt-4">
+                <ascendere-pagination-navigation></ascendere-pagination-navigation>
+            </div>
+        </ng-container>
+
+    </ng-container>
+</section>
+
+
+<ascendere-footer></ascendere-footer>

@@ -1,0 +1,55 @@
+<ascendere-navbar></ascendere-navbar>
+
+<main class="w-full max-w-6xl mx-auto px-4 mt-20 flex flex-col items-center gap-4 md:gap-8">
+
+    <ascendere-circle-icon src="/assets/images/proyectos-innovacion.svg" alt="Proyecto de Innovación">
+    </ascendere-circle-icon>
+
+    <h3 class="font-medium text-white text-lg md:text-2xl">
+        ¿Qué es la innovación educativa?
+    </h3>
+    <p class="text-justify text-white md:text-xl">
+        Caminar hacia la excelencia es nuestro reto institucional, esto implica trascender de la transmisión de
+        contenidos a codiseñar ambientes de aprendizaje enfocados a una construcción colaborativa del conocimiento, en
+        donde el estudiante asume un papel activo y fundamental. Consecuentemente, estamos llamados a innovar.
+    </p>
+    <p class="text-justify text-white md:text-xl">
+        El proyecto <b>ASCENDERE</b> sustenta en la innovación educativa, definida como la implementación planificada de
+        un cambio significativo en el proceso de enseñanza-aprendizaje, incorporando una transformación en los
+        materiales, métodos, contenidos, evaluación o ambientes de enseñanza. De esta manera, está asociada con la
+        aportación de valor y la relevancia en la formación de los estudiantes, desarrollo profesional de los docentes y
+        en el contexto de nuestra institución.
+    </p>
+    <p class="text-justify text-white md:text-xl">
+        Bajo esto, <b>ASCENDERE</b> potencia el desarrollo de buenas prácticas y proyectos de innovación para que
+        semestralmente los profesores de grado y posgrados de todas las modalidades participen con sus propuestas para
+        potenciar el diseño de experiencias de aprendizajes innovadoras.
+    </p>
+
+    <div class="flex flex-row flex-wrap gap-4 md:gap-8 items-stretch">
+        <a class="px-4 py-2 md:py-3 text-center md:text-lg truncate rounded-md text-ascendere-yellow bg-white">
+            Postular
+        </a>
+        <a class="px-4 py-2 md:py-3 text-center md:text-lg truncate rounded-md text-ascendere-yellow bg-white"
+            href="assets/documents/convocatoria-abril-agosto-2022.pdf" target="_blank" rel="noopener noreferrer">
+            Ver convocatoria
+        </a>
+        <button class="px-4 py-2 md:py-3 text-center md:text-lg truncate rounded-md text-ascendere-yellow bg-white"
+            (click)="toggleBuenasPracticas()">
+            Resumen Buenas Prácticas Abril - Agosto 2021
+        </button>
+    </div>
+    </main>
+
+<div *ngIf="isBuenasPracticasOpen" class="w-full max-w-7xl px-4 mx-auto mt-10 md:mt-20">
+    <iframe src="https://cdn.flipsnack.com/widget/v2/widget.html?hash=d15g39co7k"
+        class="aspect-square md:aspect-video w-full" seamless="seamless" scrolling="no" frameBorder="0"
+        allowFullScreen></iframe>
+</div>
+
+<!-- go to projects -->
+<div class="mt-10 md:mt-20 mb-20">
+    <ascendere-list-projects></ascendere-list-projects>
+</div>
+
+<ascendere-footer></ascendere-footer>

@@ -1,0 +1,74 @@
+<section class="w-full h-full flex flex-row overflow-hidden">
+    <div
+        class="hidden shrink-0 md:block relative bg-gradient-to-br from-ascendere-blueLighter to-ascendere-blueDarker px-10 py-20 h-full w-2/5 lg:w-1/4">
+        <div class="absolute top-0 bottom-0 right-0 w-2 bg-white opacity-70"></div>
+
+        <div class="h-full flex flex-col gap-4 md:gap-8">
+
+            <h2 class="text-white text-3xl font-medium">
+                Ascendere
+            </h2>
+
+            <div class="grow"></div>
+
+            <a class="text-lg xl:text-xl px-4 py-2 rounded-full bg-ascendere-yellow text-white text-center"
+                href="https://firebasestorage.googleapis.com/v0/b/web-sg-ascendere.appspot.com/o/Eventos%20acade%CC%81micos%20VA%202022.pdf?alt=media&token=8dd0430e-c1e4-4ae8-a8cc-8a11858ab6c8"
+                target="_blank" rel="noopener noreferrer">
+                Calendario de Eventos Ascendere
+            </a>
+            <a class="text-lg xl:text-xl px-4 py-2 rounded-full bg-ascendere-yellow text-white text-center"
+                href="https://cdn.flipsnack.com/widget/v2/widget.html?hash=713y39pvxn" target="_blank"
+                rel="noopener noreferrer">
+                Programa de Formación Docente 2022
+            </a>
+        </div>
+    </div>
+
+    <div *ngIf="schedule$|async as schedule" class=" grow overflow-auto px-4 md:px-8 py-12 h-full">
+        <div class="flex flex-col gap-4">
+
+            <div class="flex flex-row gap-4 items-center">
+                <h2 class="md:hidden text-white text-2xl font-medium">
+                    Agenda Ascendere
+                </h2>
+
+                <ascendere-close-circle class="ml-auto "></ascendere-close-circle>
+            </div>
+
+            <p *ngIf="schedule.loading">
+                <ascendere-loading></ascendere-loading>
+            </p>
+            <p *ngIf="schedule.error" class=" text-white">
+                Ocurrió un error al cargar los eventos.
+            </p>
+            <p *ngIf="schedule.data?.length===0" class=" text-white">
+                No se encontraron eventos próximos
+            </p>
+            <div *ngIf="schedule.data?.length??0>0" class="grid grid-cols-auto-fit gap-8">
+                <article *ngFor="let item of schedule.data" class="flex flex-col shadow rounded bg-white">
+                    <!-- image -->
+                    <img class="w-full aspect-square" [src]="item.flyer" [alt]="item.title">
+                    <div class="px-4 py-6 flex flex-col gap-4">
+                        <h3 class="text-xl truncate font-medium" [title]="item.title">
+                            {{item.title}}
+                        </h3>
+                        <p *ngIf="item.start" class="truncate">
+                            <b>Inicia</b>: {{item.start.toDate()|date:"fullDate"}}
+                        </p>
+                        <p *ngIf="item.end" class="truncate">
+                            <b>Finaliza</b>: {{item.end.toDate()|date:"fullDate"}}
+                        </p>
+                        <a class="px-3 py-2 bg-ascendere-blue rounded text-white font-medium self-start"
+                            [href]="item.link?.zoom" target="_blank" rel="noopener noreferrer">
+                            Inscríbete aquí
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>

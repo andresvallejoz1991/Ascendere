@@ -1,0 +1,12 @@
+<span
+  class="text-xs uppercase p-4 gap-3 font-bold text-left rounded-full cursor-pointer flex flex-row items-center text-black w-full"
+  [ngClass]="isActive? 'bg-ascendere-yellowDarker': 'text-opacity-60 hover:text-opacity-100'">
+
+  <!-- active icon -->
+  <i *ngIf="isActive" class="text-xl text-black bi bi-arrow-right-circle
+  "></i>
+
+  <span class="truncate">
+    <ng-content></ng-content>
+  </span>
+</span>

@@ -1,0 +1,9 @@
+<a routerLink="/encuentros" [queryParams]="{key}" [title]="title">
+    <article class="relative w-full h-auto transform transition-transform" [ngClass]="{'scale-105':active}">
+        <img [src]="assetSource" [alt]="title" class="rounded-xl w-full aspect-square bg-white p-6 md:p-8">
+
+        <h3 class="text-white text-2xl truncate mt-4 text-center">
+            {{title|titlecase}}
+        </h3>
+    </article>
+</a>

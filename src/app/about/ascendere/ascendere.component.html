@@ -1,0 +1,76 @@
+<ascendere-navbar></ascendere-navbar>
+
+<main class="w-full max-w-5xl mx-auto px-4 mt-20 flex flex-col items-center gap-8">
+
+    <ascendere-circle-icon src="/assets/images/ascendere-logo.svg" alt="Proyecto Ascendere"> </ascendere-circle-icon>
+
+    <p class="text-center text-white md:text-xl">
+        <b>ASCENDERE</b> evoca la consigna <i>"Recuerda Superarte Siempre"</i>, para reafirmar el compromiso de la UTPL de
+        contar con
+        docentes que inspiran a sus alumnos, innovadores, vinculados con la práctica de su profesión y que se encuentren
+        a la vanguardia de la disciplina.
+    </p>
+    <p class="text-center text-white md:text-xl">
+        El Proyecto Ascendere nació con el propósito de trabajar y agrupar aquellas iniciativas que potencien las
+        competencias de los docentes a través de la innovación académica e investigación sobre las nuevas metodologías
+        de educación y uso de las TIC.
+    </p>
+</main>
+
+
+<section class="w-full max-w-10xl mx-auto px-4 mt-20 flex flex-col items-center gap-8 ">
+    <!-- left col -->
+    <div class="flex flex-col items-start gap-8 md:w-3/5">
+        <h3 class="font-medium text-lg md:text-2xl text-white">
+            Objetivos
+        </h3>
+
+        <ul class="text-white md:text-xl list-disc list-outside pl-8">
+            <li class="mb-4">
+                Mejorar la calidad educativa de las titulaciones de grado y postgrado.
+            </li>
+            <li class="mb-4">
+                Generar movilidad docente hacia otras universidades con las cuales se pueda compartir las experiencias
+                de las buenas prácticas docentes.
+            </li>
+            <li class="mb-4">
+                Crear espacios para identificar, valorar, sistematizar, normalizar, aplicar y difundir las experiencias
+                novedosas que contribuyan a la solución de problemas educativos que estén afectando la calidad de los
+                aprendizajes.
+            </li>
+            <li class="mb-4">
+                Estimular la investigación como un elemento cotidiano determinante de la formación profesional continua
+                de los docentes a partir de su propia práctica educativa.
+            </li>
+            <li class="mb-4">
+                Documentar las experiencias de las buenas prácticas docentes innovadoras.
+            </li>
+        </ul>
+    </div>
+
+</section>
+
+<!-- initiatives -->
+<section id="iniciativas" class="container mx-auto px-4 my-8 md:my-20">
+    <div class="grid grid-cols-auto-fit gap-8 md:gap-16">
+
+        <ascendere-ascendere-card title="Proyectos de Innovación Docente"
+            description="Semestralmente los profesores de Modalidad Presencial, Abierta y Postrados. Presentan su propuesta de Buenas Prácticas Docentes para pote..."
+            imageSrc="/assets/images/proyectos-innovacion.svg" linkTo="/innovacion-docente">
+        </ascendere-ascendere-card>
+
+        <ascendere-ascendere-card title="Proyectos de Innovación Docente"
+            description="El Programa de Formación agrupa un conjunto de módulos que se dictan por medio de cursos, seminarios o talleres formativos, con el objetivo de ..."
+            imageSrc="/assets/images/programa-formacion-docente.svg" linkTo="/formacion">
+        </ascendere-ascendere-card>
+
+        <ng-container *ngFor="let encuentroType of encuentrosTypes">
+            <ascendere-ascendere-card [title]="encuentroType.title |titlecase" [description]="encuentroType.description"
+                [imageSrc]="encuentroType.assetSource" linkTo="/encuentros" [queryParams]="{key: encuentroType.key}">
+            </ascendere-ascendere-card>
+        </ng-container>
+
+    </div>
+</section>
+
+<ascendere-footer></ascendere-footer>

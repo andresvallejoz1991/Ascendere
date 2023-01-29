@@ -1,0 +1,71 @@
+<article class=" w-full h-auto flex flex-col items-stretch">
+    <!-- date -->
+    <span class="self-center text-white text-sm mb-4">
+        {{podcast.created.toDate()|date:"medium"}}
+    </span>
+
+    <!-- card style -->
+    <div class="w-full rounded-lg shadow-lg overflow-hidden">
+
+        <!-- image wrapper -->
+        <div class="relative w-full aspect-square bg-[#1B4669]">
+            <img class="absolute inset-0 object-cover w-full h-full" [src]="podcast.thumbnail" [alt]="podcast.title" loading="lazy">
+        </div>
+
+        <!-- content -->
+        <div class="w-full flex flex-col items-stretch gap-4 bg-gradient-to-br from bg-[#00ACC1] to-[#027CB5] p-4 ">
+            <!-- player -->
+            <audio controls class="w-full" preload="none">
+                <source [src]="podcast.enclosure.link" [type]="podcast.enclosure.type">
+            </audio>
+
+            <!-- description -->
+            <div class="text-white ">
+                <div class="whitespace-pre-wrap" [ngClass]="{'line-clamp-3': !isContentExpanded}">
+                    <span [outerHTML]="podcast.content"></span>
+                </div>
+                <button class="text-sm mt-2" (click)="toggleExpand()">
+                    <ng-container *ngIf="isContentExpanded;else readMore">
+                        Ocultar
+                    </ng-container>
+                    <ng-template #readMore>
+                        Leer más
+                    </ng-template>
+                </button>
+            </div>
+
+
+            <!-- area -->
+            <div [title]="podcast.area" class="w-full bg-white text-sm  px-4 py-2 rounded-3xl">
+                <span class="line-clamp-1">
+                    {{podcast.area | titlecase}}
+                </span>
+            </div>
+        </div>
+
+        <!-- likes and dislikes -->
+        <div class="bg-[#144161] text-lg text-white flex flex-row gap-4 px-4 py-2">
+            <!-- like button -->
+            <button (click)="like()">
+                <ng-container *ngIf="hasLiked$|async;else notLiked">
+                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                </ng-container>
+                <ng-template #notLiked>
+                    <i class="bi bi-hand-thumbs-up"></i>
+                </ng-template>
+                {{(podcast.like ?? 0) + (podcast.likesList?.length ?? 0)}}
+            </button>
+
+            <!-- dislike button -->
+            <button (click)="dislike()">
+                <ng-container *ngIf="hasDisliked$|async;else notDisliked">
+                    <i class="bi bi-hand-thumbs-down-fill"></i>
+                </ng-container>
+                <ng-template #notDisliked>
+                    <i class="bi bi-hand-thumbs-down"></i>
+                </ng-template>
+                {{(podcast.dislike ?? 0) + (podcast.dislikesList?.length ?? 0)}}
+            </button>
+        </div>
+    </div>
+</article>

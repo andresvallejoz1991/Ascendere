@@ -1,0 +1,43 @@
+<div class="flex">
+    <div class="flex w-full">
+        <h2 class="text-center text-ascendere-blue text-xl md:text-3xl font-medium mb-10 w-full">
+            Encuentros  
+        </h2>
+    </div>
+    <div class="flex  w-full justify-end">
+        <a class="self-start text-lg px-6 py-2 rounded-full text-white bg-ascendere-yellow transform duration-300 hover:scale-105"
+            routerLink="/encuentros">
+            Ver más <i class="bi bi-arrow-right"></i>
+        </a>
+    </div>
+</div>
+
+<div *ngIf="encuentros$|async as encuentros" class="mb-8">
+
+    <!-- loading -->
+    <p *ngIf="encuentros.loading" class="text-center text-lg">
+        Cargando...
+    </p>
+
+    <!-- error -->
+    <p *ngIf="encuentros.error" class="text-center text-lg">
+        Ocurrió un problema al cargar los encuentros
+    </p>
+
+    <!-- data -->
+    <div *ngIf="encuentros.data?.length??0>0" class=" flex flex-col gap-10">
+        <div *ngFor="let encuentro of encuentros.data">
+            <a [routerLink]="['/encuentros', encuentro.type, encuentro.id]" [title]="encuentro.title"
+                class="w-full h-full block  transform transition-transform hover:scale-105">
+                <img class="w-full aspect-square rounded-md shadow-md" [src]="encuentro.banner" [alt]="encuentro.title">
+            </a>
+        </div>
+    </div>
+
+    <!-- loaded and empty -->
+    <div *ngIf="encuentros.data?.length === 0" class="text-center text-lg">
+        No se encontraron encuentros próximos
+    </div>
+
+
+</div>

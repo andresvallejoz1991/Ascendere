@@ -1,0 +1,30 @@
+<div class="flex ">
+    <div class="flex-auto md:w-5/7 ">
+        <h2 class="text-ascendere-blue text-xl md:text-3xl font-medium mb-10">
+            Proyectos de Innovación
+        </h2>    
+    </div>
+    <div class="flex md:w-2/7 mt-2 justify-end ">
+        <a class="self-start text-lg px-6 py-2 rounded-full text-white bg-ascendere-yellow transform duration-300 hover:scale-105"
+            routerLink="/innovacion-docente">
+            Ver más <i class="bi bi-arrow-right"></i>
+        </a>
+    </div>
+</div>
+
+
+<div *ngIf="proyectos$|async as projects" class="bg-ascendere-blue px-4 md:px-8 py-16 -ml-4 -mr-4 md:mr-0">
+    <p class="text-white" *ngIf="projects.loading">
+        Cargando proyectos...
+    </p>
+
+    <p class="text-white" *ngIf="projects.error">
+        Ocurrió un error al cargar los proyectos
+    </p>
+
+    <div *ngIf="projects.data" class="flex flex-col gap-10">
+        <ascendere-project-card [proyecto]="project" *ngFor="let project of projects.data"></ascendere-project-card>
+    </div>
+
+
+</div>

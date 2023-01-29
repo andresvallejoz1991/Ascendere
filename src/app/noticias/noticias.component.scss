@@ -1,0 +1,16 @@
+a.card{
+    &{
+        @apply aspect-video sm:aspect-square;
+        .overlay {
+            @apply bg-gradient-to-t from-ascendere-yellow ;
+        }
+    }
+    &:nth-child(2n) {
+        .overlay {
+            @apply  from-ascendere-blue ;
+        }
+    }
+    &:nth-child(4n-6) {
+        @apply  md:aspect-auto md:col-span-2;
+    }
+}

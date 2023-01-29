@@ -1,0 +1,151 @@
+<ascendere-navbar></ascendere-navbar>
+<ng-container *ngIf="proyecto$|async as proyecto">
+
+    <ng-container *ngIf="proyecto.loading">
+        <p class="mx-auto text-center text-white px-4 py-32">
+            Cargando...
+        </p>
+    </ng-container>
+
+    <ng-container *ngIf="proyecto.error">
+        Ocurrió un error al cargar la información del proyecto
+    </ng-container>
+
+    <ng-container *ngIf="proyecto.data">
+
+        <header class="max-w-6xl w-full mx-auto px-4 my-14 md:my-20">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl text-white">
+                {{proyecto.data.title}}
+            </h1>
+        </header>
+
+        <main class="max-w-6xl w-full mx-auto px-4">
+            <div
+                class="px-4 py-8 bg-ascendere-blue rounded-lg mb-10 grid grid-cols-1 md:grid-cols-4 auto-rows-auto gap-x-12 gap-y-8">
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg truncate md:text-lg lg:text-xl py-2 px-4 lg:px-6">
+                        Coordinador
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-lg">
+                        {{proyecto.data.coordinator.name}}
+                    </p>
+                </div>
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg truncate md:text-lg lg:text-xl py-2 px-4 lg:px-6">
+                        Facultades
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-lg" *ngFor="let area of proyecto.data.faculties">
+                        {{area.name}}
+                    </p>
+                </div>
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg truncate md:text-lg lg:text-xl py-2 px-4 lg:px-6">
+                        Línea estratégica
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-lg">
+                        {{proyecto.data.strategicLine}}
+                    </p>
+                </div>
+
+
+                <!--  -->
+                <ng-container *ngIf="proyecto.data.subject">
+                    <div class="col-start-1">
+                        <h3
+                            class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg truncate md:text-lg lg:text-xl py-2 px-4 lg:px-6">
+                            Estrategía Pedagógica
+                        </h3>
+                    </div>
+                    <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                        <p class="text-white md:text-lg">
+                            {{proyecto.data.subject}}
+                        </p>
+                    </div>
+                </ng-container>
+
+                <!--  -->
+                <ng-container *ngIf="proyecto.data.collaborators.length>0">
+
+                    <div class="col-start-1">
+                        <h3
+                            class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg truncate md:text-lg lg:text-xl py-2 px-4 lg:px-6">
+                            Colaboradores
+                        </h3>
+                    </div>
+                    <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                        <p class="text-white md:text-lg" *ngFor="let collaborator of proyecto.data.collaborators">
+                            <i class="bi bi-person-square"></i> {{collaborator.name ??
+                            collaborator.collaborator.displayName}}
+                        </p>
+                    </div>
+                </ng-container>
+            </div>
+        </main>
+
+        <!-- section with information of the project -->
+        <section class="max-w-6xl w-full mx-auto mb-20 px-4">
+            <div class="px-20 py-8 bg-ascendere-blue rounded-lg flex flex-col">
+                <h2 class="text-white text-2xl text-center mb-12">
+                    INFORMACIÓN GENERAL
+                </h2>
+
+                <!--  -->
+                <h3 class="text-white text-xl mb-2">
+                    Objetivo General
+                </h3>
+                <div class="text-white text-lg html-content mb-8" [innerHtml]="proyecto.data.objetivesGeneral">
+                </div>
+
+                <!--  -->
+                <ng-container *ngIf="proyecto.data.objetivesSpecific">
+
+                    <h3 class="text-white text-xl mb-2">Objetivo Especifico</h3>
+
+                    <div class="text-white text-lg html-content mb-8">
+                        <div *ngIf="proyecto.data.objetivesSpecific.includes('span');else objetivesSpecific"
+                            [innerHTML]="proyecto.data.objetivesSpecific">
+                        </div>
+
+                        <ng-template #objetivesSpecific>
+                            <ul>
+                                <li *ngFor="let item of proyecto.data.objetivesSpecific">{{ item }}</li>
+                            </ul>
+                        </ng-template>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="proyecto.data.results">
+                    <h3 class="text-white text-xl mb-2">Resultados Esperados</h3>
+                    <div class="text-white text-lg html-content mb-8">
+                        <div *ngIf="proyecto.data.results.includes('span'); else results"
+                            [innerHTML]="proyecto.data.results">
+                        </div>
+
+                        <ng-template #results>
+                            <ul>
+                                <li *ngFor="let item of proyecto.data.results">{{ item }}</li>
+                            </ul>
+                        </ng-template>
+                    </div>
+                </ng-container>
+            </div>
+        </section>
+
+    </ng-container>
+</ng-container>
+<ascendere-footer></ascendere-footer>

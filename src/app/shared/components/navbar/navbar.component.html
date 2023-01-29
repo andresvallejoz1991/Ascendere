@@ -1,0 +1,26 @@
+<div class="h-12 md:h-14"></div>
+
+<header class="fixed z-40 top-0 w-full bg-ascendere-blue h-12 md:h-14 flex items-center justify-center shadow-md">
+    <nav class="container flex items-center gap-4 px-4">
+        <a [routerLink]="['/']">
+            <h2 class="text-white font-medium text-xl md:text-3xl">Ascendere</h2>
+        </a>
+        <div class="flex-grow"></div>
+
+        <!-- User -->
+        <ascendere-login-button></ascendere-login-button>
+        
+        <!-- navigate to -->
+        <div class="hidden md:block md:flex-grow"></div>
+        <a [routerLink]="['/podcasts']" title="Podcasts">
+            <i class="text-white text-2xl sm:text-3xl bi bi-headphones"></i>
+        </a>
+        <a [routerLink]="['/webinars']" title="Webinars">
+            <i class="text-white text-2xl sm:text-3xl bi bi-camera-video"></i>
+        </a>
+        <button (click)="openNavbar()" title="Navegación" class="sm:hidden flex flex-row items-center gap-2">
+            <span class="text-white font-medium">Menú</span>
+            <i class="text-white text-2xl sm:text-3xl bi bi-list"></i>
+        </button>
+    </nav>
+</header>

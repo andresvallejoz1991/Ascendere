@@ -1,0 +1,60 @@
+<div class="mx-auto w-full max-w-6xl px-4 mb-10 md:mb-20">
+    <!-- list styling -->
+    <div class="grid grid-cols-auto-fit gap-12">
+        <ascendere-project-type-card *ngFor="let projectType of proyectosTypes" [assetSource]="projectType.assetSource"
+            [key]="projectType.key" [title]="projectType.title" [description]="projectType.description">
+        </ascendere-project-type-card>
+    </div>
+</div>
+
+<!-- projects  -->
+<div *ngIf="proyectos$|async as projects" class="container mx-auto px-4 mb-20">
+    <ng-container *ngIf="projects.loading">
+        <ascendere-loading></ascendere-loading>
+    </ng-container>
+
+    <ng-container *ngIf="projects.error">
+        Ocurrió un error al cargar los proyectos
+    </ng-container>
+
+    <ng-container *ngIf="projects.data">
+        <!-- options -->
+        <div class="w-full mb-8 flex flex-row flex-wrap gap-8">
+            <div class="flex-[1_1_320px]">
+                <ascendere-dropdown-select key="coordinador" label="Coordinador">
+                    <ascendere-dropdown-option key="coordinador">
+                    </ascendere-dropdown-option>
+                    <ascendere-dropdown-option *ngFor="let l of coordinador$|async" [label]="l" key="coordinador">
+                    </ascendere-dropdown-option>
+                </ascendere-dropdown-select>
+            </div>
+            <div class="flex-[1_1_320px]">
+                <ascendere-dropdown-select key="facultades" label="Facultades">
+                    <ascendere-dropdown-option key="facultades">
+                    </ascendere-dropdown-option>
+                    <ascendere-dropdown-option *ngFor="let l of facultades$|async" [label]="l" key="facultades">
+                    </ascendere-dropdown-option>
+                </ascendere-dropdown-select>
+            </div>
+            <div class="flex-[1_1_320px]">
+                <ascendere-dropdown-select key="strategicLine" label="Lineas Estratégicas">
+                    <ascendere-dropdown-option key="strategicLine">
+                    </ascendere-dropdown-option>
+                    <ascendere-dropdown-option *ngFor="let l of strategicLines$|async" [label]="l" key="strategicLine">
+                    </ascendere-dropdown-option>
+                </ascendere-dropdown-select>
+            </div>
+            <div class="flex-[1_1_100%]">
+                <ascendere-search-input></ascendere-search-input>
+            </div>
+            <div class="flex-[1_1_320px]" *ngFor="let project of projects.data">
+                <ascendere-project-card [proyecto]="project" >
+                </ascendere-project-card>
+            </div>
+            <div class="flex-[1_1_100%]">
+                <ascendere-pagination-navigation></ascendere-pagination-navigation>
+            </div>
+        </div>
+
+    </ng-container>
+</div>

@@ -1,0 +1,16 @@
+<article class="flex flex-col gap-6 bg-ascendere-blue rounded-2xl p-4 items-center">
+    <!-- image -->
+    <img [src]="imageSrc" [alt]="title "
+        class="bg-white aspect-video md:aspect-square w-full object-contain px-12 py-4 sm:py-8 md:py-12 rounded-lg">
+
+    <!-- about -->
+    <p class="text-white text-lg line-clamp-3">
+        {{description}}
+    </p>
+
+    <!-- link -->
+    <a [routerLink]="routerLink" [queryParams]="queryParams"
+        class=" bg-ascendere-yellow rounded-lg text-lg px-4 w-full max-w-xs py-2 text-center text-white">
+        Ver más
+    </a>
+</article>

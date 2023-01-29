@@ -1,0 +1,202 @@
+<!-- when a video is playing place it over everything -->
+<div [hidden]="!formacionOutlet.isActivated"
+    class="fixed h-screen w-full bg-ascendere-blue bg-opacity-70 z-50 overflow-auto backdrop-blur">
+    <router-outlet #formacionOutlet="outlet"></router-outlet>
+</div>
+
+<ascendere-navbar></ascendere-navbar>
+
+<ascendere-page-title [showBackButton]="true">
+    Formación Docente
+</ascendere-page-title>
+
+<div class="max-w-6xl w-full mx-auto px-4" *ngIf="curso$|async as curso">
+
+    <p *ngIf="curso.loading" class="text-center text-white px-4 py-32">
+        Cargando...
+    </p>
+
+    <p *ngIf="curso.error">
+        Ocurrió un error al cargar la información del curso
+    </p>
+
+    <ng-container *ngIf="curso.data">
+
+        <header class="my-14 md:my-20">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl text-white">
+                {{curso.data.title}}
+            </h1>
+        </header>
+
+        <main class="px-4 py-8 bg-ascendere-blue rounded-lg mb-10">
+
+
+            <div class="grid grid-cols-1 md:grid-cols-4 auto-rows-auto gap-x-12 gap-y-8">
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg md:text-xl py-2 px-6">
+                        Formadores
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p *ngFor="let formador of curso.data.instructors" class="text-white md:text-xl">
+                        <i class="bi bi-person-video3"></i> {{formador.name}}
+                    </p>
+                </div>
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg md:text-xl py-2 px-6">
+                        Lugar
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-xl" *ngFor="let place of curso.data.places">
+                        {{place.label |titlecase}}
+                    </p>
+                </div>
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg md:text-xl py-2 px-6">
+                        Fecha
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-xl">
+                        Del {{curso.data.date_start?.toDate()|date}} hasta {{curso.data.date_end?.toDate()|date}}
+                    </p>
+                </div>
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg md:text-xl py-2 px-6">
+                        Modalidad
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-xl">
+                        {{curso.data.modality}}
+                    </p>
+                </div>
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg md:text-xl py-2 px-6">
+                        Duración
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-xl">
+                        {{curso.data.duration}}
+                    </p>
+                </div>
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg md:text-xl py-2 px-6">
+                        Sesiones Síncronas
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-xl">
+                        <span [innerHTML]="curso.data.synchronous_sessions"></span>
+                    </p>
+                </div>
+
+                <!--  -->
+                <div class="col-start-1">
+                    <h3
+                        class="w-full xs:w-1/2 md:w-full bg-ascendere-yellow text-white font-medium rounded-lg md:text-xl py-2 px-6">
+                        Horario
+                    </h3>
+                </div>
+                <div class="sm:col-span-2 ml-8 md:ml-0 flex flex-col items-start justify-center gap-2">
+                    <p class="text-white md:text-xl">
+                        <span [innerHTML]="curso.data.schedule"></span>
+                    </p>
+                </div>
+
+            </div>
+            <!-- Inscribe course -->
+            <ng-container *ngIf="curso.data.date_postulation as postulationDate">
+                <ng-container *ngIf="inscriptionsAvailable(postulationDate.toDate()); else inscriptionsEndedTemplate">
+                    <button (click)="gotoInscription()"
+                        class="block text-center mt-8 animate-bounce w-full text-white px-4 py-2 font-medium rounded-lg md:text-xl bg-ascendere-yellow">
+                        <ng-container *ngIf="isInscribed$|async as isInscribed">
+                            <ng-container
+                                *ngIf="!isInscribed.loading && isInscribed.data; else inscribeInCourseTemplate">
+                                Usted ya esta inscrito en este curso
+                            </ng-container>
+                            <ng-template #inscribeInCourseTemplate>
+                                Postula a la formación hasta el {{postulationDate.toDate()|date:'fullDate'}}
+                            </ng-template>
+                        </ng-container>
+                    </button>
+                </ng-container>
+
+                <!-- inscriptions ended -->
+                <ng-template #inscriptionsEndedTemplate>
+                    <span
+                        class="block text-center mt-8 w-full text-white px-4 py-2 font-medium rounded-lg md:text-xl bg-ascendere-yellow">
+                        La fecha de inscripciones ha terminado
+                    </span>
+                </ng-template>
+            </ng-container>
+        </main>
+
+        <!-- TODO: @charlie aquí puedes añadir eñ video -->
+
+        <section class=" mb-20">
+            <div class="px-8 md:px-20 py-8 bg-ascendere-blue rounded-lg">
+                <h2 class="text-white text-2xl text-center mb-4 font-medium">
+                    Descripción General del Curso
+                </h2>
+                <ng-container *ngIf="curso.data.description as description">
+                    <h3 class="text-2xl text-white mb-2">Finalidades de la formación</h3>
+                    <p class="text-white text-xl html-content" [innerHTML]="description"> </p>
+                    <br />
+                </ng-container>
+                <ng-container *ngIf="curso.data.addressedTo as addressedTo">
+                    <h3 class="text-2xl text-white mb-2">Dirigido a</h3>
+                    <p class="text-white text-xl html-content">{{ addressedTo }}</p>
+                    <br />
+                </ng-container>
+                <ng-container *ngIf="curso.data.skills as skills">
+                    <h3 class="text-2xl text-white mb-2">Competencias a desarrollar</h3>
+                    <div class="text-white text-xl html-content">
+                        <ol>
+                            <li *ngFor="let item of skills">
+                                {{ item.name }}
+                            </li>
+                        </ol>
+                    </div>
+                    <br />
+                </ng-container>
+                <ng-container *ngIf="curso.data.content as content">
+                    <h3 class="text-2xl text-white mb-2">Contenido del curso</h3>
+                    <p [innerHTML]="content" class="text-white text-xl html-content"></p>
+                    <br />
+                </ng-container>
+                <ng-container class="objetiveGeneral">
+                    <h3 class="text-2xl text-white mb-2">Modalidades de Evaluación</h3>
+                    <div class="text-white text-xl html-content">
+                        <ol>
+                            <li *ngFor="let item of curso.data.evaluations">
+                                {{ item }}
+                            </li>
+                        </ol>
+                    </div>
+                </ng-container>
+            </div>
+        </section>
+
+    </ng-container>
+</div>
+
+<ascendere-footer></ascendere-footer>

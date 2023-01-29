@@ -1,0 +1,48 @@
+<div class="flex">
+    <div class="flex w-full">
+        <h2 class="md:text-center text-ascendere-blue text-xl md:text-3xl font-medium mb-10 w-full">
+            Visibilizaciones  
+        </h2>
+    </div>
+    <div class="flex  w-full justify-end">
+        <a class="self-start text-lg px-6 py-2 rounded-full text-white bg-ascendere-yellow transform duration-300 hover:scale-105"
+            routerLink="/visibilizacion">
+            Ver más <i class="bi bi-arrow-right"></i>
+        </a>
+    </div>
+</div>
+
+<div *ngIf="videos1$|async as videos">
+    <p class="text-white" *ngIf="videos.loading">
+        Cargando Visibilizaciones...
+    </p>
+
+    <p class="text-white" *ngIf="videos.error">
+        Ocurrió un error al cargar las Visibilizaciones
+    </p>
+
+    <div *ngIf="videos.data" class=" w-full grid grid-cols-auto-fit gap-10">
+        <ascendere-visibilizacion-card *ngFor="let video of videos.data" [video]="video">
+        </ascendere-visibilizacion-card>
+    </div>
+
+
+</div>
+<br>
+<br>
+<div *ngIf="videos2$|async as videos">
+    <p class="text-white" *ngIf="videos.loading">
+        Cargando Visibilizaciones...
+    </p>
+
+    <p class="text-white" *ngIf="videos.error">
+        Ocurrió un error al cargar las Visibilizaciones
+    </p>
+
+    <div *ngIf="videos.data" class=" w-full grid grid-cols-auto-fit gap-10">
+        <ascendere-visibilizacion-card *ngFor="let video of videos.data" [video]="video">
+        </ascendere-visibilizacion-card>
+    </div>
+
+
+</div>

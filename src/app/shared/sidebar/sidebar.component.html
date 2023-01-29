@@ -1,0 +1,124 @@
+<!-- floating menu icon -->
+<button (click)="openNavbar()" class="fixed z-20 bg-ascendere-yellow rounded-l-xl pl-4 pr-8 py-4 shadow-2xl
+    hidden sm:flex flex-col gap-1 items-center
+    right-0 top-1/2 transform -translate-y-1/2  
+    translate-x-4 hover:translate-x-0 transition-all">
+    <i class="text-white text-3xl bi bi-list"></i>
+    <span class="text-white font-medium">
+        MENÚ
+    </span>
+</button>
+
+<!-- close overlay -->
+<button (click)="closeNavbar()" *ngIf="isOpen" class="fixed inset-0 w-full h-full z-30 bg-black bg-opacity-20"
+    tabindex="-1"></button>
+
+<!-- navbar -->
+<div class="fixed z-40 top-0 bottom-0 right-0 w-full sm:w-80 bg-ascendere-yellow overflow-hidden 
+transform translate-x-full transition-transform" [ngClass]="{'translate-x-0': isOpen}">
+    <div class="relative w-full h-full flex flex-col px-6 py-4 overflow-y-auto">
+        <!-- close button -->
+        <button (click)="closeNavbar()"
+            class="mb-4 self-end flex gap-2 bg-ascendere-yellowDarker py-2 px-4 rounded-full" [tabindex]="isOpen?0:-1">
+
+            Cerrar
+            <i class="bi bi-x-circle"></i>
+        </button>
+
+        <!-- initial Items -->
+        <a ascendere-sidebar-item routerLink="/" routerLinkActive #home="routerLinkActive" [active]="home.isActive"
+            [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Inicio
+        </a>
+        <ascendere-sidebar-divider></ascendere-sidebar-divider>
+
+        <!--  -->
+        <h3 ascendere-sidebar-header>Acerca de</h3>
+        <a ascendere-sidebar-item routerLink="/acerca-de/ascendere" routerLinkActive #about="routerLinkActive"
+            [active]="about.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Ascendere
+        </a>
+        <ascendere-sidebar-divider></ascendere-sidebar-divider>
+
+        <!--  -->
+        <h3 ascendere-sidebar-header>Laboratorio</h3>
+        <a ascendere-sidebar-item href="https://liidutpl.ec/" target="_blank" rel="noopener noreferrer">
+            LiiD
+        </a>
+        <a ascendere-sidebar-item routerLink="/liid/recursos" routerLinkActive #resources="routerLinkActive"
+            [active]="resources.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Recursos y Herramientas
+        </a>
+        <ascendere-sidebar-divider></ascendere-sidebar-divider>
+
+        <!--  -->
+        <h3 ascendere-sidebar-header>Innovación</h3>
+        <a ascendere-sidebar-item routerLink="/innovacion-docente" routerLinkActive #projects="routerLinkActive"
+            [active]="projects.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Innovación Docente
+        </a>
+        <a ascendere-sidebar-item routerLink="/innovacion-docente/ayudantes-de-catedra" routerLinkActive
+            #catedra="routerLinkActive" [active]="catedra.isActive" [routerLinkActiveOptions]="{exact: true}"
+            [tabindex]="isOpen?0:-1">
+            Ayudantes de Cátedra
+        </a>
+
+        <a ascendere-sidebar-item href="https://sgmentores.web.app/" target="_blank" rel="noopener noreferrer"
+            [tabindex]="isOpen?0:-1">
+            Proyecto Mentores
+        </a>
+        
+        <a ascendere-sidebar-item routerLink="/visibilizacion" routerLinkActive #visibilizacion="routerLinkActive"
+        [active]="visibilizacion.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Visibilización Ascendere
+        </a>
+        <ascendere-sidebar-divider></ascendere-sidebar-divider>
+
+        <!--  -->
+        <h3 ascendere-sidebar-header>Formación</h3>
+        <a ascendere-sidebar-item routerLink="/formacion" routerLinkActive #courses="routerLinkActive"
+            [active]="courses.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Formación Docente
+        </a>
+        <!-- <a ascendere-sidebar-item routerLink="/formacion/campamento-ascendere" routerLinkActive #camp="routerLinkActive"
+            [active]="camp.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Ascendere Camp
+        </a> -->
+        <a ascendere-sidebar-item routerLink="/podcasts" routerLinkActive #podcasts="routerLinkActive"
+            [active]="podcasts.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Ascendere al Aire
+        </a>
+        <a ascendere-sidebar-item routerLink="/webinars" routerLinkActive #webinars="routerLinkActive"
+            [active]="webinars.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Webinars
+        </a>
+        <ascendere-sidebar-divider></ascendere-sidebar-divider>
+
+        <!--  -->
+        <h3 ascendere-sidebar-header>Encuentros</h3>
+        <ng-container *ngFor="let encuentroType of encuentrosTypes">
+            <a ascendere-sidebar-item routerLink="/encuentros" routerLinkActive #coffee="routerLinkActive"
+                [active]="coffee.isActive" [routerLinkActiveOptions]="{exact: true}"
+                [queryParams]="{key: encuentroType.key}" [tabindex]="isOpen?0:-1">
+                {{encuentroType.title |titlecase}}
+            </a>
+        </ng-container>
+        <ascendere-sidebar-divider></ascendere-sidebar-divider>
+
+        <!--  -->
+        <h3 ascendere-sidebar-header>Observatorio</h3>
+        <a ascendere-sidebar-item routerLink="/noticias" routerLinkActive #news="routerLinkActive"
+            [active]="news.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Noticias</a>
+        <a ascendere-sidebar-item routerLink="/jornadas" routerLinkActive #jornadas="routerLinkActive"
+            [active]="jornadas.isActive" [routerLinkActiveOptions]="{exact: true}" [tabindex]="isOpen?0:-1">
+            Jornadas Académicas
+        </a>
+        <a ascendere-sidebar-item href="/assets/documents/revista-ascendere.pdf" target="_blank" rel="noopener noreferrer">
+            Revista Ascendere
+        </a>
+
+        
+
+    </div>
+</div>

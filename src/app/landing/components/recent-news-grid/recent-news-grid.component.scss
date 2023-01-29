@@ -1,0 +1,26 @@
+a{
+    &:nth-child(1) {
+        @apply md:row-span-2;
+        .overlay {
+            @apply bg-gradient-to-t from-ascendere-yellow ;
+        }
+    }
+    &:nth-child(2) {
+        @apply md:col-span-2;
+        .overlay {
+            @apply bg-gradient-to-t md:bg-gradient-to-r from-ascendere-blue;
+        }
+    }
+    &:nth-child(3) {
+        @apply aspect-video md:aspect-square;
+        .overlay {
+            @apply bg-gradient-to-t from-ascendere-blue;
+        }
+    }
+    &:nth-child(4) {
+        @apply aspect-video md:aspect-square;
+        .overlay {
+            @apply bg-gradient-to-t from-ascendere-yellow;
+        }
+    }
+}
